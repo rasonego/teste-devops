@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app-node
+  name: app-node
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: app-node
+  template:
+    metadata:
+      labels:
+        app: app-node
+    spec:
+      containers:
+      - image: rasonego/app-node:1.0
+        name: app-node
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: app-node
+  name: app-node
+spec:
+  ports:
+    - port: 8080
+      targetPort: 3000
+  selector:
+    app: app-node
+  type: LoadBalancer
